@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/room3.glb')
+  const { nodes, materials } = useGLTF('/room4.glb')
   return (
     <group {...props} dispose={null} position={[27, -4, 35]} rotation={[0, 1.6, 0]}>
       <mesh

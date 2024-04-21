@@ -65,8 +65,9 @@ export default function Effects() {
             samples={260} // The number of samples per pixel.
             density={1.0}
     />
-<Bloom intensity={14.0} luminanceThreshold={0.8}  luminanceSmoothing={5.15}/>
-            <Vignette />
+        <Bloom intensity={14.0} luminanceThreshold={0.8}  luminanceSmoothing={5.15}/>
+            <Vignette  offset={0.5} // vignette offset
+    darkness={0.5} />
           </EffectComposer>
         )}
         </>
