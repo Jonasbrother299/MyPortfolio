@@ -10,7 +10,7 @@ import Lights from "./Lights/Lights";
 const CameraAnimator = () => {
     const { camera } = useThree();
     const [startMoving, setStartMoving] = useState(false);
-    const targetZ = 20; // Define how far you want the camera to move
+    const targetZ = 10; // Define how far you want the camera to move
     const speed = 0.02; // Speed of movement
 
     useEffect(() => {

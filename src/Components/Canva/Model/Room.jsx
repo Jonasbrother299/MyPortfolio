@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 export default function Model(props) {
-  const { nodes, materials } = useGLTF('/room4.glb')
+  const { nodes, materials } = useGLTF('/room5.glb')
   return (
     <group {...props} dispose={null} position={[27, -4, 35]} rotation={[0, 1.6, 0]}>
       <mesh
@@ -22,8 +22,24 @@ export default function Model(props) {
         position={[-5.479, -6.93, 53.353]}
         scale={[2.996, 2.996, 3.031]}
       />
-    </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cylinder.geometry}
+        material={materials['Material.001']}
+        position={[45.514, 1.768, -29.408]}
+        scale={[0.66, 1, 0.66]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cylinder001.geometry}
+        material={materials['Material.001']}
+        position={[45.514, 1.768, -25.086]}
+        scale={[0.66, 1, 0.66]}
+      />
+          </group>
   )
 }
 
-useGLTF.preload('/room3.glb')
+useGLTF.preload('/room5.glb')
