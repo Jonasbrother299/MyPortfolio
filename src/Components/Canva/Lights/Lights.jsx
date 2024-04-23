@@ -66,8 +66,8 @@ function Lights() {
       <pointLight color={color} position={[0, 1, -10]} intensity={0.3} />
 
       <spotLight ref={$backLight} position={[0, 1, 3]} intensity={0.4} distance={4} color="blue" /> */}
-
-<ambientLight intensity={4}></ambientLight>
+<directionalLight></directionalLight>
+<ambientLight intensity={20}></ambientLight>
     </>
   )
 }

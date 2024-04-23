@@ -1,7 +1,7 @@
 import { Suspense, useState, useEffect,  } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment, OrbitControls, Sparkles } from "@react-three/drei";
 import { CineonToneMapping } from "three";
 import Room from "./Model/Room";
 import Effects from "./Effects";
@@ -41,11 +41,11 @@ const CanvasHome = () => {
            shadows
            linear={true}
            dpr={2.5}
-           camera={{ position: [0, 0.3, 50], far: 1000, fov: 45 }}
+           camera={{ position: [0, 0.3, 50], near: 0.1, far: 100000, fov: 45 }}
            gl={{
              powerPreference: 'high-performance',
              alpha: false,
-             antialias: false,
+             antialias: true,
              stencil: false,
              depth: true,
            }}
@@ -53,11 +53,14 @@ const CanvasHome = () => {
         >
           <mesh position={[-5,0,32]} rotation={[0,1.6,0]}>
             <planeGeometry args={[20,6]} ></planeGeometry>
-          <meshBasicMaterial color="#f8eccd"></meshBasicMaterial>
+            <meshBasicMaterial color="#f8eccd"></meshBasicMaterial>
           </mesh>
             <CameraAnimator />
             <Lights></Lights>
             <Effects></Effects>
+            <group position={[0,0,38]}>  
+              <Sparkles color="white" count={30} noise={[0.5, 0.5, 0.5]}  scale={6} size={6} speed={0.4} opacity={0.7}/>
+            </group>
             <Environment preset="warehouse" environmentIntensity={0.01}></Environment>
             <OrbitControls></OrbitControls>
           <Room></Room>
