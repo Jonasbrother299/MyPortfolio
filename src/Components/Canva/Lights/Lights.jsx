@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useControls } from 'leva';
 
-function Lights() {
+const Lights = React.memo(() => {
   const $dirLight = useRef();
 
   const { color, intensity, positionX, positionY, positionZ } = useControls({
@@ -12,18 +12,23 @@ function Lights() {
     positionZ: { value: 50, min: -100, max: 100, step: 1 },
   });
 
+  // Memoize the light parameters to prevent unnecessary re-renders
+  const lightProps = useMemo(() => ({
+    color,
+    intensity,
+    position: [positionX, positionY, positionZ],
+  }), [color, intensity, positionX, positionY, positionZ]);
+
   return (
     <>
       <directionalLight
         ref={$dirLight}
-        color={color}
-        intensity={intensity}
-        position={[positionX, positionY, positionZ]}
+        {...lightProps}
         castShadow={true}
       />
-     <ambientLight intensity={0.5}></ambientLight>
+      <ambientLight intensity={0.5} />
     </>
-  )
-}
+  );
+});
 
-export default Lights
+export default Lights;

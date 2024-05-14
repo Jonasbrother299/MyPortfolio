@@ -1,10 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { useGLTF } from '@react-three/drei/core/useGLTF';
 import { MeshReflectorMaterial } from '@react-three/drei/core/MeshReflectorMaterial';
-import { useThree } from '@react-three/fiber';
-import { Outlines } from '@react-three/drei/core/Outlines';
 import { useLoader } from '@react-three/fiber';
-import { TextureLoader, Color } from 'three';
+import { TextureLoader } from 'three';
+
 
 export default function Model(props) {
   const { nodes, materials } = useGLTF('/room1236.glb');
@@ -31,32 +30,32 @@ export default function Model(props) {
     };
   }, [materials]);
 
-  const handlePointerOver = (pillarName) => {
+  const handlePointerOver = useCallback((pillarName) => {
     switch (pillarName) {
       case 'Pillar_4':
-        materials['Material.008'].emissive.set(0xff0000); // Change LightBox_5 emissive color to red
-        materials['Material.008'].emissiveIntensity = 2;
-        materials['Material.008'].toneMapped = false;
+        materials['Material.008'].emissive.set(0xE67E00); // Change LightBox_5 emissive color to red
+        materials['Material.008'].emissiveIntensity = 4;
+        materials['Material.008'].toneMapped = true;
         materials['Material.008'].needsUpdate = true;
         break;
       case 'Pillar_3':
-        materials['Material.004'].emissive.set(0x0000ff); // Change LightBox_4 emissive color to blue
-        materials['Material.004'].emissiveIntensity = 2;
-        materials['Material.004'].toneMapped = false;
+        materials['Material.004'].emissive.set(0xE67E00); // Change LightBox_4 emissive color to blue
+        materials['Material.004'].emissiveIntensity = 4;
+        materials['Material.004'].toneMapped = true;
         materials['Material.004'].needsUpdate = true;
         break;
       case 'Pillar_5':
-        materials['Material.002'].emissive.set(0x00ff00); // Change LightBox_3 emissive color to green
-        materials['Material.002'].emissiveIntensity = 2;
-        materials['Material.002'].toneMapped = false;
+        materials['Material.002'].emissive.set(0xE67E00); // Change LightBox_3 emissive color to green
+        materials['Material.002'].emissiveIntensity = 4;
+        materials['Material.002'].toneMapped = true;
         materials['Material.002'].needsUpdate = true;
         break;
       default:
         break;
     }
-  };
+  }, [materials]);
 
-  const handlePointerOut = (pillarName) => {
+  const handlePointerOut = useCallback((pillarName) => {
     switch (pillarName) {
       case 'Pillar_4':
         materials['Material.008'].emissive.copy(originalProperties.current['Material.008'].emissive); // Reset LightBox_5 emissive color
@@ -79,12 +78,14 @@ export default function Model(props) {
       default:
         break;
     }
-  };
+  }, [materials]);
+
+  const pillars = useMemo(() => ['Pillar_5', 'Pillar_4', 'Pillar_3'], []);
 
   return (
     <group {...props} dispose={null} position={[-21.7, -3, 16.5]} rotation={[0, 0, 0]}>
       <group name="Scene">
-        {['Pillar_5', 'Pillar_4', 'Pillar_3'].map(pillarName => (
+        {pillars.map(pillarName => (
           <mesh
             key={pillarName}
             onPointerOver={() => handlePointerOver(pillarName)}
@@ -95,9 +96,7 @@ export default function Model(props) {
             material={materials['Material.005']}
             position={nodes[pillarName].position}
             scale={[0.102, 0.052, 0.102]}
-          >
-            <Outlines thickness={0.06} color="black" />
-          </mesh>
+          />
         ))}
         <group position={[15.698, 1.275, -0.745]} scale={[0.526, 0.526, 0.532]}>
           <mesh
@@ -108,7 +107,7 @@ export default function Model(props) {
           >
             <MeshReflectorMaterial
               blur={[300, 100]}
-              resolution={2048}
+              resolution={512} // Lower the resolution for better performance
               mixBlur={1}
               mixStrength={20}
               roughness={0}
@@ -120,7 +119,6 @@ export default function Model(props) {
               map={materials['Material.007'].map}
               reflectorOffset={0.9}
             />
-            <Outlines thickness={0.06} color="black" />
           </mesh>
           <mesh
             castShadow
@@ -129,7 +127,7 @@ export default function Model(props) {
           >
             <MeshReflectorMaterial
               blur={[600, 100]}
-              resolution={2048}
+              resolution={512} // Lower the resolution for better performance
               mixBlur={4}
               mixStrength={20}
               roughness={0.8}
@@ -188,7 +186,7 @@ export default function Model(props) {
         >
           <MeshReflectorMaterial
             blur={[300, 300]}
-            resolution={2048}
+            resolution={512} // Lower the resolution for better performance
             mixBlur={99999999}
             mixStrength={5}
             roughness={0.9}
@@ -200,7 +198,7 @@ export default function Model(props) {
             envMap={null} // Explicitly set environment map to null
             envMapIntensity={0.2}
             map={materials['Material.007'].map} // Assuming there's an existing texture map
-            reflectorOffset={0.4} // Offsets the virtual camera that projects the reflection. Useful when the reflective surface is some distance from the object's origin (default = 0)
+            reflectorOffset={0.4}
           />
         </mesh>
         <mesh
