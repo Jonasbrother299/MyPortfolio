@@ -1,0 +1,15 @@
+/* styles.css */
+.overlay {
+    position: fixed;
+    top: -460px;
+    right: -600px;
+    background: rgba(45, 45, 45, 0.9);
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 1000;
+    display: none; /* Initially hidden */
+  }
+  
+  .overlay.visible {
+    display: block; /* Show when the visible class is added */
+  }
